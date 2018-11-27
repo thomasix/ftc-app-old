@@ -13,6 +13,7 @@ public class RuckusHardware {
 
     public RuckusHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
+        this.init();
     }
 
     public void init() {
