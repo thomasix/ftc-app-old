@@ -79,7 +79,26 @@ public class AutoHelper {
     }
 
     public void stopEncodedDrive() {
-        ruckusHardware.setNewWheelTargets(ruckusHardware.lfWheel.getCurrentPosition(), ruckusHardware.rfWheel.getCurrentPosition(),
-                ruckusHardware.lrWheel.getCurrentPosition(), ruckusHardware.rrWheel.getCurrentPosition());
+        ruckusHardware.setMotorPowers(0, 0, 0, 0);
+        ruckusHardware.setDcMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void resetEncoders() {
+        ruckusHardware.setDcMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ElapsedTime elapsedTime = new ElapsedTime();
+        elapsedTime.reset();
+        while(elapsedTime.milliseconds() < 100 && opMode.opModeIsActive()) {
+        }
+        ruckusHardware.setDcMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while(elapsedTime.milliseconds() < 200 && opMode.opModeIsActive()) {
+        }
+    }
+
+    public double inchToCM(double inch) {
+        return inch*2.54;
+    }
+
+    public double inchToMM(double inch) {
+        return this.inchToCM(inch) * 0.1;
     }
 }
