@@ -41,7 +41,8 @@ public class RuckusHardware {
 
         setDcMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setDcMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        heavyLiftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        heavyLiftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        heavyLiftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         setZeroMode(DcMotor.ZeroPowerBehavior.BRAKE);
         heavyLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
