@@ -79,10 +79,10 @@ public class CraterAuto extends LinearOpMode {
         ruckusHardware.setDcMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         ElapsedTime elapsedTime = new ElapsedTime();
         elapsedTime.reset();
-        while(elapsedTime.milliseconds() < 500 && opModeIsActive()) {
+        while(elapsedTime.milliseconds() < 100 && opModeIsActive()) {
         }
         ruckusHardware.setDcMotorMode(runMode);
-        while(elapsedTime.milliseconds() < 1000 && opModeIsActive()) {
+        while(elapsedTime.milliseconds() < 200 && opModeIsActive()) {
         }
         ruckusHardware.telemetryData(telemetry, "DriveAndWait", "CurrentEncoders", "LF: " + ruckusHardware.lfWheel.getCurrentPosition() + " " + ruckusHardware.lfWheel.getTargetPosition() + "\n" +
                 "RF: " + ruckusHardware.rfWheel.getCurrentPosition() + " " + ruckusHardware.rfWheel.getTargetPosition() + "\n" +
