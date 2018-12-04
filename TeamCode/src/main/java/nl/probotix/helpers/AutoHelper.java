@@ -12,8 +12,6 @@ import nl.probotix.RuckusHardware;
 
 public class AutoHelper {
 
-    public boolean autoTransmit = false;
-
     private RuckusHardware ruckusHardware;
     private LinearOpMode opMode;
 
