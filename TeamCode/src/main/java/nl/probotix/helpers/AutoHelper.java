@@ -21,20 +21,22 @@ public class AutoHelper {
     }
 
     public void driveAndWait(double linearX, double linearY, double angularZ, double time, double timeout) {
-        driveEncoded(linearX, linearY, angularZ, time);
-        ElapsedTime runtime = new ElapsedTime();
-        runtime.reset();
+        if(opMode.opModeIsActive()) {
+            driveEncoded(linearX, linearY, angularZ, time);
+            ElapsedTime runtime = new ElapsedTime();
+            runtime.reset();
 
-        while (opMode.opModeIsActive() && runtime.milliseconds() < timeout*1000 && ruckusHardware.lfWheel.isBusy() &&
-                ruckusHardware.rfWheel.isBusy() && ruckusHardware.lrWheel.isBusy() &&
-                ruckusHardware.rrWheel.isBusy()) {
-            ruckusHardware.telemetryData(opMode.telemetry, "DriveAndWait", "Encoders", "LF: " + ruckusHardware.lfWheel.getCurrentPosition() + " " + ruckusHardware.lfWheel.getTargetPosition() + "\n" +
-                    "RF: " + ruckusHardware.rfWheel.getCurrentPosition() + " " + ruckusHardware.rfWheel.getTargetPosition() + "\n" +
-                    "LR: " + ruckusHardware.lrWheel.getCurrentPosition() + " " + ruckusHardware.lrWheel.getTargetPosition() + "\n" +
-                    "RR: " + ruckusHardware.rrWheel.getCurrentPosition() + " " + ruckusHardware.rrWheel.getTargetPosition());
+            while (opMode.opModeIsActive() && runtime.milliseconds() < timeout * 1000 && ruckusHardware.lfWheel.isBusy() &&
+                    ruckusHardware.rfWheel.isBusy() && ruckusHardware.lrWheel.isBusy() &&
+                    ruckusHardware.rrWheel.isBusy()) {
+                ruckusHardware.telemetryData(opMode.telemetry, "DriveAndWait", "Encoders", "LF: " + ruckusHardware.lfWheel.getCurrentPosition() + " " + ruckusHardware.lfWheel.getTargetPosition() + "\n" +
+                        "RF: " + ruckusHardware.rfWheel.getCurrentPosition() + " " + ruckusHardware.rfWheel.getTargetPosition() + "\n" +
+                        "LR: " + ruckusHardware.lrWheel.getCurrentPosition() + " " + ruckusHardware.lrWheel.getTargetPosition() + "\n" +
+                        "RR: " + ruckusHardware.rrWheel.getCurrentPosition() + " " + ruckusHardware.rrWheel.getTargetPosition());
+            }
+            ruckusHardware.setMotorPowers(0, 0, 0, 0);
+            ruckusHardware.setDcMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-        ruckusHardware.setMotorPowers(0, 0, 0, 0);
-        ruckusHardware.setDcMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void driveEncoded(double linearX, double linearY, double angularZ, double time) {
