@@ -55,6 +55,7 @@ public class CraterAutoFull extends LinearOpMode {
         detector.maxAreaScorer.weight = 0.005;
         detector.ratioScorer.weight = 5;
         detector.ratioScorer.perfectRatio = 1.0;
+        detector.enable();
 
         //init done
         ruckusHardware.telemetryData(telemetry, opModeName, "Status", "Initialized; Waiting for start...");
@@ -90,80 +91,16 @@ public class CraterAutoFull extends LinearOpMode {
 
 //2.5s  //drive forward towards minerals
         if(opModeIsActive()) {
-            autoHelper.driveAndWait(tileDiagonal, -100, 0, 2, 2.5);
+            autoHelper.driveAndWait(tileDiagonal * 10, -100, 0, 2, 2.5);
         }
 
-        if(opModeIsActive() && detector.isFound() && mineralAlign == MineralAlign.UNKNOWN) {
+        if(opModeIsActive() && detector.isFound()) {
             Point p = detector.getScreenPosition();
             double x = p.x;
             double y = p.y;
             ruckusHardware.telemetryData(telemetry, opModeName, "Minerals", "Found a mineral in screen position x:" + x + " y:" + y + " and alignment is CENTER!");
-            mineralAlign = MineralAlign.CENTER;
-            autoHelper.driveAndWait(150, 0, 0, 0.25, 0.5);
-            autoHelper.driveAndWait(-150, 0, 0, 0.25, 0.5);
         }
-
-//1.5s
-        if(opModeIsActive()) {
-            autoHelper.driveAndWait(0, autoHelper.inchToMM(-14.5), 0, 1, 1.5);
-        }
-
-        if(opModeIsActive() && detector.isFound() && mineralAlign == MineralAlign.UNKNOWN) {
-            Point p = detector.getScreenPosition();
-            double x = p.x;
-            double y = p.y;
-            ruckusHardware.telemetryData(telemetry, opModeName, "Minerals", "Found a mineral in screen position x:" + x + " y:" + y + " and alignment is RIGHT!");
-            mineralAlign = MineralAlign.RIGHT;
-            autoHelper.driveAndWait(150, 0, 0, 0.25, 0.5);
-            autoHelper.driveAndWait(-150, 0, 0, 0.25, 0.5);
-        }
-
-//3s
-        if(opModeIsActive()) {
-            autoHelper.driveAndWait(0, autoHelper.inchToMM(29), 0, 2, 3);
-        }
-
-        if(opModeIsActive() && detector.isFound() && mineralAlign == MineralAlign.UNKNOWN) {
-            Point p = detector.getScreenPosition();
-            double x = p.x;
-            double y = p.y;
-            ruckusHardware.telemetryData(telemetry, opModeName, "Minerals", "Found a mineral in screen position x:" + x + " y:" + y + " and alignment is LEFT!");
-            mineralAlign = MineralAlign.LEFT;
-            autoHelper.driveAndWait(150, 0, 0, 0.25, 0.5);
-            autoHelper.driveAndWait(-150, 0, 0, 0.25, 0.5);
-        }
-
-        if(opModeIsActive() && mineralAlign == MineralAlign.UNKNOWN) {
-            autoHelper.driveAndWait(150, 0, 0, 0.25, 0.5);
-            autoHelper.driveAndWait(-150, 0, 0, 0.25, 0.5);
-        }
-
-//7s
-        autoHelper.driveAndWait(0, 0.5*tileDiagonal, 0, 1, 1.5);
-        autoHelper.driveAndWait(0, 0, 45, 1, 1.5);
-        autoHelper.driveAndWait(0, 600, 0, 1, 1.5);
-        autoHelper.driveAndWait(0, 0, 45, 1, 1.5);
-        autoHelper.driveAndWait(0, 150, 0, 0.5, 1);
-
-        if(mineralAlign == MineralAlign.RIGHT) {
-            autoHelper.driveAndWait(400, 0, 0, 1, 1.5);
-            autoHelper.driveAndWait(0, 0, 45, 1, 1.5);
-            autoHelper.driveAndWait(750, 0, 0, 1, 1.5);
-            autoHelper.driveAndWait(0, 0, 180, 2, 2.5);
-        } else if(mineralAlign == MineralAlign.CENTER) {
-            autoHelper.driveAndWait(0, autoHelper.inchToMM(14.5), 0, 1, 1.5);
-            autoHelper.driveAndWait(1000, 0, 0, 1.5, 2);
-            autoHelper.driveAndWait(0, 0, -135, 1, 1.5);
-        } else if(mineralAlign == MineralAlign.LEFT || mineralAlign == MineralAlign.UNKNOWN) {
-            autoHelper.driveAndWait(0, autoHelper.inchToMM(29), 0, 1.5, 2);
-            autoHelper.driveAndWait(600, 0, 0, 1, 1.5);
-            autoHelper.driveAndWait(0, 0, -45, 1, 1.5);
-            autoHelper.driveAndWait(600, 0, 0, 1, 1.5);
-            autoHelper.driveAndWait(0, 0, -90, 1, 1.5);
-        }
-        autoHelper.driveAndWait(20, 0, 0, 1.5, 2);
-        autoHelper.driveAndWait(1800, 0, 0, 2, 3);
-        autoHelper.driveAndWait(600, 0, 0, 3, 4);
+        detector.disable();
 
 //19.5s
     }
